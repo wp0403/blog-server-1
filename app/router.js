@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2021-12-29 16:44:37
+ * @LastEditTime: 2022-01-18 17:21:12
  */
 'use strict';
 
@@ -14,10 +14,11 @@
 module.exports = app => {
   const { router, controller } = app;
   router.get('/getAuthority', controller.all.getAuthority);
-  router.get('/homeText', controller.home.index);
-  router.get('/homeMain', controller.home.getMain);
-  router.get('/homeMainEssay', controller.home.getMainList);
+  router.get('/getUserData', controller.all.getUserData);
+  router.get('/getBowenList', controller.all.getBowenList);
   router.get('/homeFooter', controller.home.getFooter);
+  router.get('/getSwiperBowenList', controller.home.getSwiperBowenList);
+  
   router.get('/get/detail', controller.detail.getList);
   router.get('/get/detailObj', controller.detail.getListObj);
   router.get('/get/projectRouter', controller.project.getRouter);
