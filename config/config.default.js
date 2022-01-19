@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2021-09-18 10:51:10
+ * @LastEditTime: 2022-01-19 09:45:41
  */
 /* eslint valid-jsdoc: "off" */
 
@@ -37,7 +37,7 @@ module.exports = appInfo => {
         // 端口号
         port: '22520',
         // 用户名
-        user: 'root',
+        user: 'readOnly',
         // 密码
         password: 'Wp201314',
         // 数据库名
