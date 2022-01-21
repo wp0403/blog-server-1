@@ -88,7 +88,7 @@ class AllService extends Service {
         'storage_type',
         'selected',
       ],
-      orders: [[ 'selected', 'desc' ]],
+      orders: [[ 'selected', 'asc' ]],
       limit: page_size,
       offset: (page - 1) * page_size,
     });

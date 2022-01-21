@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-18 17:21:12
+ * @LastEditTime: 2022-01-21 15:42:09
  */
 'use strict';
 
@@ -18,7 +18,8 @@ module.exports = app => {
   router.get('/getBowenList', controller.all.getBowenList);
   router.get('/homeFooter', controller.home.getFooter);
   router.get('/getSwiperBowenList', controller.home.getSwiperBowenList);
-  
+  router.get('/getSecretList', controller.secret.getSecretList);
+
   router.get('/get/detail', controller.detail.getList);
   router.get('/get/detailObj', controller.detail.getListObj);
   router.get('/get/projectRouter', controller.project.getRouter);
