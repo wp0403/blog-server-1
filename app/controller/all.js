@@ -4,7 +4,7 @@
  * @Author: WangPeng
  * @Date: 2021-12-28 17:59:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-18 17:43:10
+ * @LastEditTime: 2022-01-21 18:18:31
  */
 'use strict';
 
@@ -83,6 +83,18 @@ class AllController extends Controller {
         data: e,
       };
     }
+  }
+
+  // 获取公网ip地址
+  async getIp() {
+    const { ctx } = this;
+
+    const ip = ctx.req.connection.remoteAddress.split(':').pop();
+
+    ctx.body = {
+      code: 200,
+      ip,
+    };
   }
 }
 
