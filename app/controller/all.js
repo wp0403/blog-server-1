@@ -3,8 +3,8 @@
  * @version: 1
  * @Author: WangPeng
  * @Date: 2021-12-28 17:59:54
- * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-21 18:18:31
+ * @LastEditors: 王鹏
+ * @LastEditTime: 2022-01-23 01:08:15
  */
 'use strict';
 
@@ -95,6 +95,28 @@ class AllController extends Controller {
       code: 200,
       ip,
     };
+  }
+
+  // 获取字典对象
+  async getDictList() {
+    const { ctx } = this;
+
+    const { id } = ctx.query;
+
+    try{
+      const data = await ctx.service.all._getDictList(id);
+
+      ctx.body = {
+        code: 200,
+        data,
+        msg:'获取字典列表成功'
+      }
+    }catch{
+      ctx.body = {
+        code: 305,
+        msg:'获取字典列表失败'
+      }
+    }
   }
 }
 

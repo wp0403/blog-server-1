@@ -3,8 +3,8 @@
  * @version: 1
  * @Author: WangPeng
  * @Date: 2021-12-28 17:56:49
- * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-18 17:42:25
+ * @LastEditors: 王鹏
+ * @LastEditTime: 2022-01-23 00:55:46
  */
 'use strict';
 
@@ -97,6 +97,18 @@ class AllService extends Service {
       data: bowenList,
       total: bowenListNum[0]['count(*)'],
     };
+  }
+
+  // 获取字典对象
+  async _getDictList(id) {
+    let dictList = [];
+    if(id){
+      dictList = await this.app.mysql.get('dict_table', { authorId:id });
+    }else{
+      dictList = await this.app.mysql.select('dict_table');
+    }
+
+    return dictList && dictList[0];
   }
 }
 

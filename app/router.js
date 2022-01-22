@@ -3,8 +3,8 @@
  * @version: 1.1.1
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
- * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-21 18:00:27
+ * @LastEditors: 王鹏
+ * @LastEditTime: 2022-01-23 01:06:01
  */
 'use strict';
 
@@ -16,6 +16,7 @@ module.exports = app => {
   router.get('/getIp', controller.all.getIp);
   router.get('/getAuthority', controller.all.getAuthority);
   router.get('/getUserData', controller.all.getUserData);
+  router.get('/getDictList', controller.all.getDictList);
   router.get('/getBowenList', controller.all.getBowenList);
   router.get('/homeFooter', controller.home.getFooter);
   router.get('/getSwiperBowenList', controller.home.getSwiperBowenList);
