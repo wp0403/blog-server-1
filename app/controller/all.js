@@ -4,7 +4,7 @@
  * @Author: WangPeng
  * @Date: 2021-12-28 17:59:54
  * @LastEditors: 王鹏
- * @LastEditTime: 2022-01-23 01:08:15
+ * @LastEditTime: 2022-01-23 09:11:47
  */
 'use strict';
 
@@ -104,7 +104,11 @@ class AllController extends Controller {
     const { id } = ctx.query;
 
     try{
-      const data = await ctx.service.all._getDictList(id);
+      let data = await ctx.service.all._getDictList(id);
+
+      if(data){
+        Object.keys(data).map(item => data[item] = eval('('+data[item]+')'));
+      }
 
       ctx.body = {
         code: 200,

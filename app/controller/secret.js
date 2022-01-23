@@ -3,8 +3,8 @@
  * @version:
  * @Author: WangPeng
  * @Date: 2022-01-21 15:15:34
- * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-21 15:44:48
+ * @LastEditors: 王鹏
+ * @LastEditTime: 2022-01-23 12:20:57
  */
 
 'use strict';
@@ -28,6 +28,7 @@ class SecretController extends Controller {
           total,
           page,
           page_size,
+          total_pages: Math.ceil(total / page_size),
         },
       };
     } catch (e) {
