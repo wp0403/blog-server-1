@@ -4,22 +4,49 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2021-09-18 10:55:40
+ * @LastEditTime: 2022-01-24 11:08:35
  */
 'use strict';
 
 const Service = require('egg').Service;
 
 class ClassifyService extends Service {
-  async _getClassifyList() {
-    return await this.app.mysql.select('categories');
+  async _getClassifyList(id) {
+    return await this.app.mysql.select('Bowen', {
+      where: { classify_id: id },
+      columns: [
+        'id',
+        'time_str',
+        'last_edit_time',
+        'img',
+        'author',
+        'classify',
+        'classify_id',
+        'title',
+        'selected',
+      ],
+    });
   }
 
-  async _getCurrentList(obj) {
-    return await this.app.mysql.select('essay', { // 搜索 essay 表
-      where: { class: obj.id }, // WHERE 条件
-      columns: [ 'id', 'title', 'dataTime', 'fileType' ], // 要查询的表字段
+  async _getClassifySubList(id) {
+    return await this.app.mysql.select('Bowen', {
+      where: { classify_sub_id: id },
+      columns: [
+        'id',
+        'time_str',
+        'last_edit_time',
+        'img',
+        'author',
+        'classify',
+        'classify_id',
+        'title',
+        'selected',
+      ],
     });
+  }
+
+  async _getClassifyDetails(id) {
+    return await this.app.mysql.get('Bowen', { id });
   }
 }
 

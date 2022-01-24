@@ -3,8 +3,8 @@
  * @version: 1.1.1
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
- * @LastEditors: 王鹏
- * @LastEditTime: 2022-01-23 01:06:01
+ * @LastEditors: WangPeng
+ * @LastEditTime: 2022-01-24 10:33:40
  */
 'use strict';
 
@@ -21,12 +21,7 @@ module.exports = app => {
   router.get('/homeFooter', controller.home.getFooter);
   router.get('/getSwiperBowenList', controller.home.getSwiperBowenList);
   router.get('/getSecretList', controller.secret.getSecretList);
-
-  router.get('/get/detail', controller.detail.getList);
-  router.get('/get/detailObj', controller.detail.getListObj);
-  router.get('/get/projectRouter', controller.project.getRouter);
-  router.get('/get/projectList', controller.project.getProjectList);
-  router.get('/get/searchProjectList', controller.project.searchProject);
-  router.get('/get/classifyList', controller.classify.getClassifyList);
-  router.get('/get/classify/currentList', controller.classify.getCurrentList);
+  router.get('/getClassifyList', controller.classify.getClassifyList);
+  router.get('/getClassifySubList', controller.classify.getClassifySubList);
+  router.get('/getClassifyDetails', controller.classify.getClassifyDetails);
 };

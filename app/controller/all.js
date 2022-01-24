@@ -1,10 +1,11 @@
+/* eslint-disable no-eval */
 /*
  * @Descripttion: 1
  * @version: 1
  * @Author: WangPeng
  * @Date: 2021-12-28 17:59:54
- * @LastEditors: 王鹏
- * @LastEditTime: 2022-01-23 09:11:47
+ * @LastEditors: WangPeng
+ * @LastEditTime: 2022-01-24 10:09:13
  */
 'use strict';
 
@@ -103,23 +104,25 @@ class AllController extends Controller {
 
     const { id } = ctx.query;
 
-    try{
-      let data = await ctx.service.all._getDictList(id);
+    try {
+      const data = await ctx.service.all._getDictList(id);
 
-      if(data){
-        Object.keys(data).map(item => data[item] = eval('('+data[item]+')'));
+      if (data) {
+        // eslint-disable-next-line no-return-assign
+        Object.keys(data).map(item => data[item] = eval('(' + data[item] + ')'));
       }
 
       ctx.body = {
         code: 200,
         data,
-        msg:'获取字典列表成功'
-      }
-    }catch{
+        msg: '获取字典列表成功',
+      };
+    } catch (e) {
       ctx.body = {
         code: 305,
-        msg:'获取字典列表失败'
-      }
+        data: e,
+        msg: '获取字典列表失败',
+      };
     }
   }
 }
