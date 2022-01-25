@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:02:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-24 10:27:34
+ * @LastEditTime: 2022-01-25 15:42:02
  */
 'use strict';
 
@@ -15,10 +15,10 @@ class ClassifyController extends Controller {
   async getClassifyList() {
     const { ctx } = this;
 
-    const { id = 1 } = ctx.request.query;
+    const { id = 1, page = 1, page_size = 10 } = ctx.request.query;
 
     try {
-      const classifyList = await ctx.service.classify._getClassifyList(id);
+      const classifyList = await ctx.service.classify._getClassifyList({ id, page, page_size });
 
       ctx.body = {
         code: 200,
@@ -38,7 +38,7 @@ class ClassifyController extends Controller {
   async getClassifySubList() {
     const { ctx } = this;
 
-    const { id } = ctx.request.query;
+    const { id, page = 1, page_size = 10 } = ctx.request.query;
 
     if (!id) {
       // eslint-disable-next-line no-return-assign
@@ -49,7 +49,7 @@ class ClassifyController extends Controller {
     }
 
     try {
-      const classifyList = await ctx.service.classify._getClassifySubList(id);
+      const classifyList = await ctx.service.classify._getClassifySubList({ id, page, page_size });
 
       ctx.body = {
         code: 200,

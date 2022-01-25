@@ -1,3 +1,4 @@
+/* eslint-disable strict */
 /*
  * @Descripttion:
  * @version: 1.1.1

@@ -4,7 +4,7 @@
  * @Author: WangPeng
  * @Date: 2021-12-28 17:56:49
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-24 10:07:10
+ * @LastEditTime: 2022-01-25 15:59:20
  */
 'use strict';
 
@@ -84,7 +84,7 @@ class AllService extends Service {
         'classify',
         'classify_id',
         'title',
-        'content',
+        'desc',
         'storage_type',
         'selected',
       ],
