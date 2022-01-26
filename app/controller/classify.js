@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:02:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-25 15:42:02
+ * @LastEditTime: 2022-01-26 15:33:59
  */
 'use strict';
 
@@ -18,12 +18,12 @@ class ClassifyController extends Controller {
     const { id = 1, page = 1, page_size = 10 } = ctx.request.query;
 
     try {
-      const classifyList = await ctx.service.classify._getClassifyList({ id, page, page_size });
+      const data = await ctx.service.classify._getClassifyList({ id, page, page_size });
 
       ctx.body = {
         code: 200,
         msg: '分类列表数据获取成功',
-        data: classifyList,
+        ...data,
       };
     } catch (e) {
       ctx.body = {
@@ -49,12 +49,12 @@ class ClassifyController extends Controller {
     }
 
     try {
-      const classifyList = await ctx.service.classify._getClassifySubList({ id, page, page_size });
+      const data = await ctx.service.classify._getClassifySubList({ id, page, page_size });
 
       ctx.body = {
         code: 200,
         msg: '分类列表数据获取成功',
-        data: classifyList,
+        ...data,
       };
     } catch (e) {
       ctx.body = {
