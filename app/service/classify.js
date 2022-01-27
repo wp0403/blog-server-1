@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-26 15:33:10
+ * @LastEditTime: 2022-01-27 10:21:40
  */
 'use strict';
 
@@ -29,7 +29,7 @@ class ClassifyService extends Service {
         'title',
         'desc',
       ],
-      limit: obj.page_size,
+      limit: +obj.page_size,
       offset: (obj.page - 1) * obj.page_size,
     });
 
@@ -61,7 +61,7 @@ class ClassifyService extends Service {
         'title',
         'desc',
       ],
-      limit: obj.page_size,
+      limit: +obj.page_size,
       offset: (obj.page - 1) * obj.page_size,
     });
 

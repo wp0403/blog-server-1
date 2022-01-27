@@ -4,7 +4,7 @@
  * @Author: WangPeng
  * @Date: 2021-12-28 17:56:49
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-25 15:59:20
+ * @LastEditTime: 2022-01-27 10:21:54
  */
 'use strict';
 
@@ -89,7 +89,7 @@ class AllService extends Service {
         'selected',
       ],
       orders: [[ 'selected', 'asc' ]],
-      limit: page_size,
+      limit: +page_size,
       offset: (page - 1) * page_size,
     });
 
