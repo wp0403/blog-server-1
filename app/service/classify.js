@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-27 10:21:40
+ * @LastEditTime: 2022-02-11 14:06:18
  */
 'use strict';
 
@@ -77,6 +77,30 @@ class ClassifyService extends Service {
 
   async _getClassifyDetails(id) {
     return await this.app.mysql.get('Bowen', { id });
+  }
+
+  async _getClassifyDetailsFooter(id) {
+    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen');
+    const bowenList = await this.app.mysql.select('Bowen', {
+      columns: [
+        'id',
+        'img',
+        'title',
+      ],
+    });
+
+    const index = bowenList.findIndex(v => +v.id === +id);
+
+    return [
+      {
+        name: 'previous',
+        obj: index > 0 ? bowenList[index - 1] : {},
+      },
+      {
+        name: 'next',
+        obj: index < bowenListNum[0]['count(*)'] - 1 ? bowenList[index + 1] : {},
+      },
+    ];
   }
 }
 

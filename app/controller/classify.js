@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:02:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-26 15:33:59
+ * @LastEditTime: 2022-02-11 10:54:01
  */
 'use strict';
 
@@ -91,6 +91,37 @@ class ClassifyController extends Controller {
       ctx.body = {
         code: 305,
         msg: '博文详情数据获取失败',
+        data: e,
+      };
+    }
+  }
+
+  // 获取详情页的上一条和下一条列表
+  async getClassifyDetailsFooter() {
+    const { ctx } = this;
+
+    const { id } = ctx.request.query;
+
+    if (!id) {
+      // eslint-disable-next-line no-return-assign
+      return ctx.body = {
+        code: 304,
+        msg: '缺失详情id',
+      };
+    }
+
+    try {
+      const classifyFooterList = await ctx.service.classify._getClassifyDetailsFooter(id);
+
+      ctx.body = {
+        code: 200,
+        msg: '博文详情上一条和下一条数据获取成功',
+        data: classifyFooterList,
+      };
+    } catch (e) {
+      ctx.body = {
+        code: 305,
+        msg: '博文详情上一条和下一条数据获取失败',
         data: e,
       };
     }
