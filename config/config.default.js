@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-19 09:45:41
+ * @LastEditTime: 2022-02-11 18:24:50
  */
 /* eslint valid-jsdoc: "off" */
 
@@ -25,6 +25,11 @@ module.exports = appInfo => {
 
   // add your middleware config here
   config.middleware = [ 'errorHandler', 'jwt' ];
+
+  // 将public下的静态资源重定向到根目录下
+  config.static = {
+    prefix: '/',
+  };
 
   // add your user config here
   const userConfig = {

@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-02-11 10:51:55
+ * @LastEditTime: 2022-02-11 18:16:13
  */
 'use strict';
 
@@ -13,6 +13,7 @@
  */
 module.exports = app => {
   const { router, controller } = app;
+  router.get('/', controller.page.index);
   router.get('/getIp', controller.all.getIp);
   router.get('/getAuthority', controller.all.getAuthority);
   router.get('/getUserData', controller.all.getUserData);
