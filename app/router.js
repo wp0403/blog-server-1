@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-02-11 18:16:13
+ * @LastEditTime: 2022-03-22 18:21:08
  */
 'use strict';
 
@@ -25,5 +25,7 @@ module.exports = app => {
   router.get('/getClassifyList', controller.classify.getClassifyList);
   router.get('/getClassifySubList', controller.classify.getClassifySubList);
   router.get('/getClassifyDetails', controller.classify.getClassifyDetails);
+  router.get('/getItineraryList', controller.itinerary.getItineraryList);
+  router.get('/getItineraryDetail', controller.itinerary.getItineraryDetail);
   router.get('/getClassifyDetailsFooter', controller.classify.getClassifyDetailsFooter);
 };
