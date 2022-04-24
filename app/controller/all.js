@@ -5,7 +5,7 @@
  * @Author: WangPeng
  * @Date: 2021-12-28 17:59:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-24 10:09:13
+ * @LastEditTime: 2022-04-24 10:25:06
  */
 'use strict';
 
@@ -30,7 +30,7 @@ class AllController extends Controller {
       ctx.body = {
         code: 305,
         msg: '权限列表数据获取失败',
-        data: e,
+        // data: e,
       };
     }
   }
@@ -53,7 +53,7 @@ class AllController extends Controller {
       ctx.body = {
         code: 305,
         msg: '博主信息获取失败',
-        data: e,
+        // data: e,
       };
     }
   }
@@ -81,7 +81,7 @@ class AllController extends Controller {
       ctx.body = {
         code: 305,
         msg: '博文列表获取失败',
-        data: e,
+        // data: e,
       };
     }
   }
@@ -120,8 +120,8 @@ class AllController extends Controller {
     } catch (e) {
       ctx.body = {
         code: 305,
-        data: e,
         msg: '获取字典列表失败',
+        // data: e,
       };
     }
   }

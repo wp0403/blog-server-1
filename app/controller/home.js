@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-18 17:47:17
+ * @LastEditTime: 2022-04-24 10:26:05
  */
 'use strict';
 
@@ -27,7 +27,7 @@ class HomeController extends Controller {
       ctx.body = {
         code: 305,
         msg: '轮播的热点博文列表获取失败',
-        data: e,
+        // data: e,
       };
     }
   }
@@ -48,7 +48,7 @@ class HomeController extends Controller {
       ctx.body = {
         code: 305,
         msg: 'home页底部数据获取失败',
-        data: e,
+        // data: e,
       };
     }
   }

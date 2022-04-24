@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:02:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-02-11 10:54:01
+ * @LastEditTime: 2022-04-24 10:25:33
  */
 'use strict';
 
@@ -29,7 +29,7 @@ class ClassifyController extends Controller {
       ctx.body = {
         code: 305,
         msg: '分类列表数据获取失败',
-        data: e,
+        // data: e,
       };
     }
   }
@@ -60,7 +60,7 @@ class ClassifyController extends Controller {
       ctx.body = {
         code: 305,
         msg: '分类列表数据获取失败',
-        data: e,
+        // data: e,
       };
     }
   }
@@ -91,7 +91,7 @@ class ClassifyController extends Controller {
       ctx.body = {
         code: 305,
         msg: '博文详情数据获取失败',
-        data: e,
+        // data: e,
       };
     }
   }
@@ -122,7 +122,7 @@ class ClassifyController extends Controller {
       ctx.body = {
         code: 305,
         msg: '博文详情上一条和下一条数据获取失败',
-        data: e,
+        // data: e,
       };
     }
   }

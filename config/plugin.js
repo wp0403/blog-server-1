@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-02-11 16:59:21
+ * @LastEditTime: 2022-04-24 10:29:42
  */
 'use strict';
 
@@ -21,5 +21,5 @@ module.exports = {
   mysql: {
     enable: true,
     package: 'egg-mysql',
-  }
+  },
 };

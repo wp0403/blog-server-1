@@ -4,7 +4,7 @@
  * @Author: WangPeng
  * @Date: 2022-03-22 15:09:45
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-03-22 18:23:29
+ * @LastEditTime: 2022-04-24 10:26:16
  */
 'use strict';
 
@@ -42,7 +42,7 @@ class ItineraryController extends Controller {
       ctx.body = {
         code: 305,
         msg: '旅行日记列表获取失败',
-        data: e,
+        // data: e,
       };
     }
   }
@@ -71,7 +71,7 @@ class ItineraryController extends Controller {
       ctx.body = {
         code: 305,
         msg: '旅行日记详情获取失败',
-        data: e,
+        // data: e,
       };
     }
   }

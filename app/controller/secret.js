@@ -3,8 +3,8 @@
  * @version:
  * @Author: WangPeng
  * @Date: 2022-01-21 15:15:34
- * @LastEditors: 王鹏
- * @LastEditTime: 2022-01-23 12:20:57
+ * @LastEditors: WangPeng
+ * @LastEditTime: 2022-04-24 10:28:36
  */
 
 'use strict';
@@ -35,7 +35,7 @@ class SecretController extends Controller {
       ctx.body = {
         code: 305,
         msg: '树洞列表获取失败',
-        data: e,
+        // data: e,
       };
     }
   }
