@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-06-22 11:48:28
+ * @LastEditTime: 2022-06-22 13:08:56
  */
 /* eslint valid-jsdoc: "off" */
 
@@ -42,11 +42,11 @@ module.exports = appInfo => {
         // 端口号
         port: '3306',
         // 用户名
-        user: 'myBoke',
+        user: 'wp0403',
         // 密码
         password: 'Wp201314',
         // 数据库名
-        database: 'myboke',
+        database: 'bokemaster',
       },
       // 是否加载到 app 上，默认开启
       app: true,
