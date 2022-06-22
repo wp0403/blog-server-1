@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-02-11 18:24:50
+ * @LastEditTime: 2022-06-22 11:48:28
  */
 /* eslint valid-jsdoc: "off" */
 
@@ -38,11 +38,11 @@ module.exports = appInfo => {
       // 单数据库信息配置
       client: {
         // host
-        host: 'bj-cynosdbmysql-grp-rs4qkbui.sql.tencentcdb.com',
+        host: 'localhost',
         // 端口号
-        port: '22520',
+        port: '3306',
         // 用户名
-        user: 'readOnly',
+        user: 'myBoke',
         // 密码
         password: 'Wp201314',
         // 数据库名
