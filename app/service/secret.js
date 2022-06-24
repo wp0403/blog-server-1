@@ -4,7 +4,7 @@
  * @Author: WangPeng
  * @Date: 2022-01-21 15:21:38
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-21 16:50:36
+ * @LastEditTime: 2022-06-24 16:51:11
  */
 
 'use strict';
@@ -42,7 +42,7 @@ class SecretService extends Service {
         'type',
         'content',
       ],
-      orders: [[ 'id', 'desc' ]],
+      orders: [[ 'isTop', 'desc' ], [ 'id', 'desc' ]],
       limit: +page_size,
       offset: (page - 1) * page_size,
     });
