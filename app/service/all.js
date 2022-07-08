@@ -4,7 +4,7 @@
  * @Author: WangPeng
  * @Date: 2021-12-28 17:56:49
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-27 10:21:54
+ * @LastEditTime: 2022-07-08 11:42:43
  */
 'use strict';
 
@@ -100,15 +100,8 @@ class AllService extends Service {
   }
 
   // 获取字典对象
-  async _getDictList(id) {
-    let dictList = [];
-    if (id) {
-      dictList = await this.app.mysql.get('dict_table', { authorId: id });
-    } else {
-      dictList = await this.app.mysql.select('dict_table');
-    }
-
-    return dictList && dictList[0];
+  async _getDictList() {
+    return await this.app.mysql.select('dictList');
   }
 }
 

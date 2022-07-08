@@ -5,7 +5,7 @@
  * @Author: WangPeng
  * @Date: 2021-12-28 17:59:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-04-24 10:25:06
+ * @LastEditTime: 2022-07-08 11:44:41
  */
 'use strict';
 
@@ -102,19 +102,17 @@ class AllController extends Controller {
   async getDictList() {
     const { ctx } = this;
 
-    const { id } = ctx.query;
-
     try {
-      const data = await ctx.service.all._getDictList(id);
-
+      const data = await ctx.service.all._getDictList();
+      const dictObj = {};
       if (data) {
         // eslint-disable-next-line no-return-assign
-        Object.keys(data).map(item => data[item] = eval('(' + data[item] + ')'));
+        data.forEach(item => dictObj[item.key] = eval('(' + item.value + ')'));
       }
 
       ctx.body = {
         code: 200,
-        data,
+        data: dictObj,
         msg: '获取字典列表成功',
       };
     } catch (e) {
