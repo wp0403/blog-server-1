@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-07-08 15:08:24
+ * @LastEditTime: 2022-07-08 15:46:35
  */
 'use strict';
 
@@ -12,7 +12,7 @@ const Service = require('egg').Service;
 
 class ClassifyService extends Service {
   async _getClassifyList(obj) {
-    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_id=?', [ obj.id ]);
+    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_id=? and type in (?)', [ obj.id, 1 ]);
 
     const bowenList = await this.app.mysql.select('Bowen', {
       where: { classify_id: obj.id, type: 1 },
@@ -44,7 +44,7 @@ class ClassifyService extends Service {
   }
 
   async _getClassifySubList(obj) {
-    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_sub_id=?', [ obj.id ]);
+    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_sub_id=? and type in (?)', [ obj.id, 1 ]);
 
     const bowenList = await this.app.mysql.select('Bowen', {
       where: { classify_sub_id: obj.id, type: 1 },
