@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-02-11 14:06:18
+ * @LastEditTime: 2022-07-08 15:08:24
  */
 'use strict';
 
@@ -15,7 +15,7 @@ class ClassifyService extends Service {
     const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_id=?', [ obj.id ]);
 
     const bowenList = await this.app.mysql.select('Bowen', {
-      where: { classify_id: obj.id },
+      where: { classify_id: obj.id, type: 1 },
       columns: [
         'id',
         'time_str',
@@ -47,7 +47,7 @@ class ClassifyService extends Service {
     const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_sub_id=?', [ obj.id ]);
 
     const bowenList = await this.app.mysql.select('Bowen', {
-      where: { classify_sub_id: obj.id },
+      where: { classify_sub_id: obj.id, type: 1 },
       columns: [
         'id',
         'time_str',
@@ -76,12 +76,13 @@ class ClassifyService extends Service {
   }
 
   async _getClassifyDetails(id) {
-    return await this.app.mysql.get('Bowen', { id });
+    return await this.app.mysql.get('Bowen', { id, type: 1 });
   }
 
   async _getClassifyDetailsFooter(id) {
-    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen');
+    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where type in (1)');
     const bowenList = await this.app.mysql.select('Bowen', {
+      where: { type: 1 },
       columns: [
         'id',
         'img',
