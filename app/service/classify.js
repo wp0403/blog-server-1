@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-07-08 15:46:35
+ * @LastEditTime: 2022-07-12 18:34:22
  */
 'use strict';
 
@@ -12,10 +12,10 @@ const Service = require('egg').Service;
 
 class ClassifyService extends Service {
   async _getClassifyList(obj) {
-    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_id=? and type in (?)', [ obj.id, 1 ]);
+    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_id=? and type in (?) and isDelete in (?)', [ obj.id, 1, 0 ]);
 
     const bowenList = await this.app.mysql.select('Bowen', {
-      where: { classify_id: obj.id, type: 1 },
+      where: { classify_id: obj.id, type: 1, isDelete: 0 },
       columns: [
         'id',
         'time_str',
@@ -44,10 +44,10 @@ class ClassifyService extends Service {
   }
 
   async _getClassifySubList(obj) {
-    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_sub_id=? and type in (?)', [ obj.id, 1 ]);
+    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_sub_id=? and type in (?) and isDelete in (?)', [ obj.id, 1, 0 ]);
 
     const bowenList = await this.app.mysql.select('Bowen', {
-      where: { classify_sub_id: obj.id, type: 1 },
+      where: { classify_sub_id: obj.id, type: 1, isDelete: 0 },
       columns: [
         'id',
         'time_str',
@@ -76,13 +76,13 @@ class ClassifyService extends Service {
   }
 
   async _getClassifyDetails(id) {
-    return await this.app.mysql.get('Bowen', { id, type: 1 });
+    return await this.app.mysql.get('Bowen', { id, type: 1, isDelete: 0 });
   }
 
   async _getClassifyDetailsFooter(id) {
-    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where type in (1)');
+    const bowenListNum = await this.app.mysql.query('select count(*) from Bowen where type in (1) and isDelete in (0)');
     const bowenList = await this.app.mysql.select('Bowen', {
-      where: { type: 1 },
+      where: { type: 1, isDelete: 0 },
       columns: [
         'id',
         'img',
