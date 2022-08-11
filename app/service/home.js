@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-10 11:56:48
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-01-18 17:54:51
+ * @LastEditTime: 2022-08-11 17:37:45
  */
 'use strict';
 
@@ -16,6 +16,7 @@ class HomeService extends Service {
     const bowenList = await this.app.mysql.select('Bowen', {
       where: {
         selected: 1,
+        isDelete: 0,
       },
       columns: [
         'id',
