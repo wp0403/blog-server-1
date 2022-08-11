@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-10 11:56:48
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-08-11 17:37:45
+ * @LastEditTime: 2022-08-11 17:55:23
  */
 'use strict';
 
@@ -17,6 +17,7 @@ class HomeService extends Service {
       where: {
         selected: 1,
         isDelete: 0,
+        type: 1,
       },
       columns: [
         'id',

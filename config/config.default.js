@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-06-22 13:08:56
+ * @LastEditTime: 2022-08-11 17:51:01
  */
 /* eslint valid-jsdoc: "off" */
 
@@ -38,7 +38,7 @@ module.exports = appInfo => {
       // 单数据库信息配置
       client: {
         // host
-        host: 'localhost',
+        host: '101.43.203.116',
         // 端口号
         port: '3306',
         // 用户名
