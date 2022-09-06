@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-08-11 17:51:01
+ * @LastEditTime: 2022-09-01 14:22:32
  */
 /* eslint valid-jsdoc: "off" */
 
@@ -29,6 +29,21 @@ module.exports = appInfo => {
   // 将public下的静态资源重定向到根目录下
   config.static = {
     prefix: '/',
+  };
+
+  // 安全配置 （https://eggjs.org/zh-cn/core/security.html）
+  config.security = {
+    csrf: {
+      enable: false,
+      ignoreJSON: true,
+    },
+    // 允许访问接口的白名单
+    domainWhiteList: [ 'http://localhost:3000', 'https://wp-boke.work', 'https://www.wp-boke.work' ],
+  };
+  // 跨域配置
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET',
   };
 
   // add your user config here
