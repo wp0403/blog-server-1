@@ -4,7 +4,7 @@
  * @Author: WangPeng
  * @Date: 2021-12-28 17:56:49
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-07-08 11:42:43
+ * @LastEditTime: 2022-10-25 16:36:03
  */
 'use strict';
 
@@ -53,50 +53,6 @@ class AllService extends Service {
     }
 
     return userData;
-  }
-
-  // 获取博文列表
-  async _getBowenList(obj) {
-    const { id, page, page_size } = obj;
-    // 表的查询条件
-    let where = {};
-    // 表的总数据量
-    let bowenListNum = [];
-
-    if (id) {
-      where = { classify_id: id };
-    }
-
-    if (Object.keys(where).length === 1) {
-      bowenListNum = await this.app.mysql.query('select count(*) from Bowen where classify_id=?', [ id ]);
-    } else {
-      bowenListNum = await this.app.mysql.query('select count(*) from Bowen');
-    }
-
-    const bowenList = await this.app.mysql.select('Bowen', {
-      where,
-      columns: [
-        'id',
-        'time_str',
-        'last_edit_time',
-        'img',
-        'author',
-        'classify',
-        'classify_id',
-        'title',
-        'desc',
-        'storage_type',
-        'selected',
-      ],
-      orders: [[ 'selected', 'asc' ]],
-      limit: +page_size,
-      offset: (page - 1) * page_size,
-    });
-
-    return {
-      data: bowenList,
-      total: bowenListNum[0]['count(*)'],
-    };
   }
 
   // 获取字典对象

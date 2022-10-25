@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-10-25 16:14:57
+ * @LastEditTime: 2022-10-25 16:27:34
  */
 'use strict';
 
@@ -18,7 +18,7 @@ class ClassifyService extends Service {
     );
 
     let sql =
-      'select a.*,json_object("id",b.uid,"name",b.name,"email",b.email) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?) and a.classify_id=? and a.isDelete in (?)';
+      'select a.*,json_object("id",b.uid,"name",b.name) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?) and a.classify_id=? and a.isDelete in (?)';
 
     const content = [ 1, obj.id, 0 ];
 
@@ -49,7 +49,7 @@ class ClassifyService extends Service {
     );
 
     let sql =
-      'select a.*,json_object("id",b.uid,"name",b.name,"email",b.email) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?) and a.classify_sub_id=? and a.isDelete in (?)';
+      'select a.*,json_object("id",b.uid,"name",b.name) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?) and a.classify_sub_id=? and a.isDelete in (?)';
 
     const content = [ 1, obj.id, 0 ];
 
