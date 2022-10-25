@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-10-25 16:02:15
+ * @LastEditTime: 2022-10-25 16:14:57
  */
 'use strict';
 
@@ -18,7 +18,7 @@ class ClassifyService extends Service {
     );
 
     let sql =
-      'select a.*,json_object("id",b.uid,"name",b.name,"email",b.email) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?) and a.classify_id in ? and a.isDelete in (?)';
+      'select a.*,json_object("id",b.uid,"name",b.name,"email",b.email) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?) and a.classify_id=? and a.isDelete in (?)';
 
     const content = [ 1, obj.id, 0 ];
 
@@ -33,7 +33,7 @@ class ClassifyService extends Service {
     const bowenList = await this.app.mysql.query(sql, content);
 
     return {
-      data: bowenList,
+      data: bowenList.map(v => ({ ...v, userInfo: JSON.parse(v.userInfo) })),
       meta: {
         page: obj.page,
         page_size: obj.page_size,
@@ -48,27 +48,23 @@ class ClassifyService extends Service {
       [ obj.id, 1, 0 ]
     );
 
-    const bowenList = await this.app.mysql.select('Bowen', {
-      where: { classify_sub_id: obj.id, type: 1, isDelete: 0 },
-      columns: [
-        'id',
-        'time_str',
-        'last_edit_time',
-        'img',
-        'author',
-        'classify',
-        'classify_id',
-        'classify_sub',
-        'classify_sub_id',
-        'title',
-        'desc',
-      ],
-      limit: +obj.page_size,
-      offset: (obj.page - 1) * obj.page_size,
-    });
+    let sql =
+      'select a.*,json_object("id",b.uid,"name",b.name,"email",b.email) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?) and a.classify_sub_id=? and a.isDelete in (?)';
+
+    const content = [ 1, obj.id, 0 ];
+
+    // 开启分页
+    if (obj.page || obj.page_size) {
+      const current = obj.page; // 当前页码
+      const pageSize = obj.page_size; // 一页展示多少条数据
+      sql += ' limit ?,?';
+      content.push((current - 1) * pageSize, parseInt(pageSize));
+    }
+
+    const bowenList = await this.app.mysql.query(sql, content);
 
     return {
-      data: bowenList,
+      data: bowenList.map(v => ({ ...v, userInfo: JSON.parse(v.userInfo) })),
       meta: {
         page: obj.page,
         page_size: obj.page_size,
