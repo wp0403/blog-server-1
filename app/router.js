@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-10-25 16:35:54
+ * @LastEditTime: 2022-11-04 17:46:27
  */
 'use strict';
 
@@ -17,6 +17,7 @@ module.exports = app => {
   router.get('/getIp', controller.all.getIp);
   router.get('/getAuthority', controller.all.getAuthority);
   router.get('/getUserData', controller.all.getUserData);
+  router.get('/getUserDetails', controller.all.getUserDetails);
   router.get('/getDictList', controller.all.getDictList);
   router.get('/getHomeFooter', controller.home.getFooter);
   router.get('/getSwiperBowenList', controller.home.getSwiperBowenList);

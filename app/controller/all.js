@@ -5,7 +5,7 @@
  * @Author: WangPeng
  * @Date: 2021-12-28 17:59:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-10-25 16:36:10
+ * @LastEditTime: 2022-11-04 17:44:38
  */
 'use strict';
 
@@ -43,6 +43,29 @@ class AllController extends Controller {
 
     try {
       const authorityList = await ctx.service.all._getUserData(id);
+
+      ctx.body = {
+        code: 200,
+        msg: '博主信息获取成功',
+        data: authorityList,
+      };
+    } catch (e) {
+      ctx.body = {
+        code: 305,
+        msg: '博主信息获取失败',
+        // data: e,
+      };
+    }
+  }
+
+  // 获取博主信息
+  async getUserDetails() {
+    const { ctx } = this;
+
+    const { id = 1 } = ctx.query;
+
+    try {
+      const authorityList = await ctx.service.all._getUserDetails(id);
 
       ctx.body = {
         code: 200,

@@ -4,7 +4,7 @@
  * @Author: WangPeng
  * @Date: 2021-12-28 17:56:49
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-10-25 16:36:03
+ * @LastEditTime: 2022-11-04 17:43:55
  */
 'use strict';
 
@@ -53,6 +53,18 @@ class AllService extends Service {
     }
 
     return userData;
+  }
+
+  // 获取用户详情
+  async _getUserDetails(id) {
+    const adminField = [ 'id', 'name', 'username', 'email', 'phone', 'qq', 'weixin', 'github', 'website', 'img', 'personal_tags', 'state', 'create_time', 'last_edit_time', 'role_id' ];
+    const siteField = [ 'id', 'author_id', 'home_title', 'home_desc', 'home_about', 'personal_label', 'secret_guide', 'about_page' ];
+    const sql =
+        `select ${adminField.map(v => `a.${v}`).join(',')},json_object(${siteField.map(v => `"${v}",b.${v}`).join(',')}) as siteInfo from admin a left join site b on a.uid = b.author_id where a.id = ?`;
+    const list = await this.app.mysql.query(sql, [ id ]);
+    return list && list[0]
+      ? { ...list[0], siteInfo: JSON.parse(list[0].siteInfo) }
+      : {};
   }
 
   // 获取字典对象
