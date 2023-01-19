@@ -4,13 +4,34 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:02:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-08-11 17:51:37
+ * @LastEditTime: 2023-01-19 12:05:40
  */
 'use strict';
 
 const Controller = require('egg').Controller;
 
 class ClassifyController extends Controller {
+  async getClassifyListPage() {
+    const { ctx } = this;
+
+    const { id, page_size = 10 } = ctx.request.query;
+
+    try {
+      const data = await ctx.service.classify._getClassifyList({ id, page_size });
+
+      ctx.body = {
+        code: 200,
+        msg: '分页数据获取成功',
+        ...data,
+      };
+    } catch (e) {
+      ctx.body = {
+        code: 305,
+        msg: '分页数据获取失败',
+        // data: e,
+      };
+    }
+  }
   // 获取一级类别的博文列表
   async getClassifyList() {
     const { ctx } = this;

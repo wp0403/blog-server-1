@@ -4,13 +4,33 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-01-19 11:37:13
+ * @LastEditTime: 2023-01-19 12:08:38
  */
 'use strict';
 
 const Service = require('egg').Service;
 
 class ClassifyService extends Service {
+  async _getClassifyListPage(obj) {
+    let sql = 'select count(*) from Bowen where ';
+
+    if (obj.id) {
+      sql += 'type in (?) and isDelete in (?)';
+    } else {
+      sql += 'classify_id=? and type in (?) and isDelete in (?)';
+    }
+    const bowenListNum = await this.app.mysql.query(sql, obj.id ? [ obj.id, 1, 0 ] : [ 1, 0 ]);
+
+    return {
+      data: Math.ceil(bowenListNum[0]['count(*)'] / obj.page_size),
+      meta: {
+        page_size: obj.page_size,
+        total: bowenListNum[0]['count(*)'],
+        totalPage: Math.ceil(bowenListNum[0]['count(*)'] / obj.page_size),
+      },
+    };
+  }
+
   async _getClassifyList(obj) {
     const bowenListNum = await this.app.mysql.query(
       'select count(*) from Bowen where classify_id=? and type in (?) and isDelete in (?)',
