@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-01-19 12:08:38
+ * @LastEditTime: 2023-01-19 12:14:41
  */
 'use strict';
 
@@ -14,7 +14,7 @@ class ClassifyService extends Service {
   async _getClassifyListPage(obj) {
     let sql = 'select count(*) from Bowen where ';
 
-    if (obj.id) {
+    if (!obj.id) {
       sql += 'type in (?) and isDelete in (?)';
     } else {
       sql += 'classify_id=? and type in (?) and isDelete in (?)';
