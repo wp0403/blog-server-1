@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-10-25 16:27:34
+ * @LastEditTime: 2023-01-19 11:27:11
  */
 'use strict';
 
@@ -38,6 +38,7 @@ class ClassifyService extends Service {
         page: obj.page,
         page_size: obj.page_size,
         total: bowenListNum[0]['count(*)'],
+        totalPage: Math.round(bowenListNum[0]['count(*)'] / obj.page_size),
       },
     };
   }
@@ -69,6 +70,7 @@ class ClassifyService extends Service {
         page: obj.page,
         page_size: obj.page_size,
         total: bowenListNum[0]['count(*)'],
+        totalPage: Math.round(bowenListNum[0]['count(*)'] / obj.page_size),
       },
     };
   }
