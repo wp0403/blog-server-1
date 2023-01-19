@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-01-19 12:14:41
+ * @LastEditTime: 2023-01-19 13:47:36
  */
 'use strict';
 
@@ -19,7 +19,10 @@ class ClassifyService extends Service {
     } else {
       sql += 'classify_id=? and type in (?) and isDelete in (?)';
     }
-    const bowenListNum = await this.app.mysql.query(sql, obj.id ? [ obj.id, 1, 0 ] : [ 1, 0 ]);
+    const bowenListNum = await this.app.mysql.query(
+      sql,
+      obj.id ? [ obj.id, 1, 0 ] : [ 1, 0 ]
+    );
 
     return {
       data: Math.ceil(bowenListNum[0]['count(*)'] / obj.page_size),
@@ -32,15 +35,15 @@ class ClassifyService extends Service {
   }
 
   async _getClassifyList(obj) {
-    const bowenListNum = await this.app.mysql.query(
-      'select count(*) from Bowen where classify_id=? and type in (?) and isDelete in (?)',
-      [ obj.id, 1, 0 ]
-    );
-
     let sql =
-      'select a.*,json_object("id",b.uid,"name",b.name) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?) and a.classify_id=? and a.isDelete in (?)';
+      'select a.*,json_object("id",b.uid,"name",b.name) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?)';
 
-    const content = [ 1, obj.id, 0 ];
+    if (obj.id) {
+      sql += ' and a.classify_id=? and a.isDelete in (?)';
+    } else {
+      sql += ' and a.isDelete in (?)';
+    }
+    const content = obj.id ? [ 1, obj.id, 0 ] : [ 1, 0 ];
 
     // 开启分页
     if (obj.page || obj.page_size) {
@@ -57,8 +60,6 @@ class ClassifyService extends Service {
       meta: {
         page: obj.page,
         page_size: obj.page_size,
-        total: bowenListNum[0]['count(*)'],
-        totalPage: Math.ceil(bowenListNum[0]['count(*)'] / obj.page_size),
       },
     };
   }
