@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:02:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-01-19 13:54:58
+ * @LastEditTime: 2023-01-19 14:27:19
  */
 'use strict';
 
@@ -32,11 +32,11 @@ class ClassifyController extends Controller {
       };
     }
   }
-  // 获取一级类别的博文列表
+  // 获取博文列表
   async getClassifyList() {
     const { ctx } = this;
 
-    const { id, page = 1, page_size = 10 } = ctx.request.query;
+    const { id, page, page_size = 10 } = ctx.request.query;
 
     try {
       const data = await ctx.service.classify._getClassifyList({ id, page, page_size });

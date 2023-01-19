@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-01-19 13:47:36
+ * @LastEditTime: 2023-01-19 14:27:05
  */
 'use strict';
 
@@ -46,7 +46,7 @@ class ClassifyService extends Service {
     const content = obj.id ? [ 1, obj.id, 0 ] : [ 1, 0 ];
 
     // 开启分页
-    if (obj.page || obj.page_size) {
+    if (obj.page && obj.page_size) {
       const current = obj.page; // 当前页码
       const pageSize = obj.page_size; // 一页展示多少条数据
       sql += ' limit ?,?';
@@ -58,8 +58,8 @@ class ClassifyService extends Service {
     return {
       data: bowenList.map(v => ({ ...v, userInfo: JSON.parse(v.userInfo) })),
       meta: {
-        page: obj.page,
-        page_size: obj.page_size,
+        page: obj.page || 0,
+        page_size: obj.page_size || 0,
       },
     };
   }
