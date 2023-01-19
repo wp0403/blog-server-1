@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:02:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-01-19 12:05:40
+ * @LastEditTime: 2023-01-19 12:13:07
  */
 'use strict';
 
@@ -17,7 +17,7 @@ class ClassifyController extends Controller {
     const { id, page_size = 10 } = ctx.request.query;
 
     try {
-      const data = await ctx.service.classify._getClassifyList({ id, page_size });
+      const data = await ctx.service.classify._getClassifyListPage({ id, page_size });
 
       ctx.body = {
         code: 200,
