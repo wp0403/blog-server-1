@@ -4,13 +4,58 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-01-25 14:51:04
+ * @LastEditTime: 2023-03-21 23:53:38
  */
 'use strict';
 
 const Service = require('egg').Service;
 
 class ClassifyService extends Service {
+  // 获取分类的数量
+  async _getClassifyNum() {
+    const sql =
+      'select classify,classify_id,classify_sub,classify_sub_id from Bowen';
+
+    const bowenList = await this.app.mysql.query(sql);
+
+    const classifyNum = [];
+    const classifySubNum = [];
+
+    bowenList.forEach(v => {
+      const ind = classifyNum.findIndex(v1 => v1.type === v.classify_id);
+      if (ind >= 0) {
+        classifyNum[ind].count = classifyNum[ind].count += 1;
+      } else {
+        classifyNum.push({
+          type: v.classify_id,
+          label: v.classify,
+          count: 1,
+        });
+      }
+    });
+
+    bowenList.forEach(v => {
+      const ind = classifySubNum.findIndex(v1 => v1.type === v.classify_sub_id);
+      if (ind >= 0) {
+        classifySubNum[ind].count = classifySubNum[ind].count += 1;
+      } else {
+        classifySubNum.push({
+          type: v.classify_sub_id,
+          label: v.classify_sub,
+          count: 1,
+        });
+      }
+    });
+
+    return {
+      data: {
+        classifyNum,
+        classifySubNum,
+      },
+    };
+  }
+
+  // 获取总页数
   async _getClassifyListPage(obj) {
     let sql = 'select count(*) from Bowen where ';
 
@@ -34,6 +79,7 @@ class ClassifyService extends Service {
     };
   }
 
+  // 获取当前页的列表数据
   async _getClassifyList(obj) {
     let sql =
       'select a.*,json_object("id",b.uid,"name",b.name) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?)';
@@ -96,6 +142,7 @@ class ClassifyService extends Service {
     };
   }
 
+  // 获取详情
   async _getClassifyDetails(id) {
     const sql =
       'select a.*,json_object("id",b.uid,"name",b.name) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.id = ? and type = ? and isDelete = ?';
@@ -105,6 +152,7 @@ class ClassifyService extends Service {
       : {};
   }
 
+  // 获取上一篇&下一篇的文章信息
   async _getClassifyDetailsFooter(id) {
     const bowenListNum = await this.app.mysql.query(
       'select count(*) from Bowen where type in (1) and isDelete in (0)'

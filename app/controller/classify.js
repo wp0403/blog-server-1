@@ -12,25 +12,25 @@ const Controller = require('egg').Controller;
 
 class ClassifyController extends Controller {
   // 获取博文分类数量
-  // async getClassifyNum() {
-  //   const { ctx } = this;
+  async getClassifyNum() {
+    const { ctx } = this;
 
-  //   try {
-  //     const data = await ctx.service.classify._getClassifyNum();
+    try {
+      const data = await ctx.service.classify._getClassifyNum();
 
-  //     ctx.body = {
-  //       code: 200,
-  //       msg: '文章分类数据获取成功',
-  //       ...data,
-  //     };
-  //   } catch (e) {
-  //     ctx.body = {
-  //       code: 305,
-  //       msg: '文章分类数据获取失败',
-  //       // data: e,
-  //     };
-  //   }
-  // }
+      ctx.body = {
+        code: 200,
+        msg: '文章分类数据获取成功',
+        ...data,
+      };
+    } catch (e) {
+      ctx.body = {
+        code: 305,
+        msg: '文章分类数据获取失败',
+        // data: e,
+      };
+    }
+  }
   // 获取博文页数，配合next分页路由
   async getClassifyListPage() {
     const { ctx } = this;
