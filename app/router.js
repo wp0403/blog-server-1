@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-03-21 23:46:01
+ * @LastEditTime: 2023-03-22 21:57:19
  */
 'use strict';
 
@@ -22,6 +22,7 @@ module.exports = app => {
   router.get('/getHomeFooter', controller.home.getFooter);
   router.get('/getSwiperBowenList', controller.home.getSwiperBowenList);
   router.get('/getSecretList', controller.secret.getSecretList);
+  router.get('/getArchive', controller.classify.getArchive);
   router.get('/getClassifyNum', controller.classify.getClassifyNum);
   router.get('/getClassifyListPage', controller.classify.getClassifyListPage);
   router.get('/getClassifyList', controller.classify.getClassifyList);

@@ -4,11 +4,26 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-03-21 23:53:38
+ * @LastEditTime: 2023-03-22 22:18:27
  */
 'use strict';
 
 const Service = require('egg').Service;
+
+const changeDate = d => {
+  const date = new Date(d);
+  const monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+
+  const month = monthNames[date.getMonth()];
+  let day = date.getDate();
+
+  if (day < 10) {
+    day = '0' + day;
+  }
+
+  return `${month} ${day}`;
+};
 
 class ClassifyService extends Service {
   // 获取分类的数量
@@ -35,7 +50,9 @@ class ClassifyService extends Service {
     });
 
     bowenList.forEach(v => {
-      const ind = classifySubNum.findIndex(v1 => v1.type === v.classify_sub_id);
+      const ind = classifySubNum.findIndex(
+        v1 => v1.type === v.classify_sub_id
+      );
       if (ind >= 0) {
         classifySubNum[ind].count = classifySubNum[ind].count += 1;
       } else {
@@ -54,7 +71,35 @@ class ClassifyService extends Service {
       },
     };
   }
+  // 获取文归档
+  async _getArchive() {
+    const sql = 'select id,title,time_str from Bowen';
 
+    let bowenList = await this.app.mysql.query(sql);
+    const newList = [];
+
+    bowenList = bowenList.map(v => ({
+      ...v,
+      date_str: changeDate(v.time_str),
+      year: new Date(v.time_str).getFullYear(),
+    }));
+
+    bowenList.forEach(v => {
+      const ind = newList.findIndex(v1 => v1.year === v.year);
+      if (ind >= 0) {
+        newList[ind].children.push(v);
+      } else {
+        newList.push({
+          year: v.year,
+          children: [ v ],
+        });
+      }
+    });
+
+    return {
+      data: newList.sort((a, b) => b.year - a.year),
+    };
+  }
   // 获取总页数
   async _getClassifyListPage(obj) {
     let sql = 'select count(*) from Bowen where ';

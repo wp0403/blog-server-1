@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:02:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-01-25 14:51:22
+ * @LastEditTime: 2023-03-22 21:54:27
  */
 'use strict';
 
@@ -27,6 +27,26 @@ class ClassifyController extends Controller {
       ctx.body = {
         code: 305,
         msg: '文章分类数据获取失败',
+        // data: e,
+      };
+    }
+  }
+  // 获取文归档列表
+  async getArchive() {
+    const { ctx } = this;
+
+    try {
+      const data = await ctx.service.classify._getArchive();
+
+      ctx.body = {
+        code: 200,
+        msg: '文归档数据获取成功',
+        ...data,
+      };
+    } catch (e) {
+      ctx.body = {
+        code: 305,
+        msg: '文归档数据获取失败',
         // data: e,
       };
     }
@@ -75,7 +95,6 @@ class ClassifyController extends Controller {
       };
     }
   }
-
   // 获取二级类别的博文列表
   async getClassifySubList() {
     const { ctx } = this;
@@ -106,7 +125,6 @@ class ClassifyController extends Controller {
       };
     }
   }
-
   // 获取博文详情数据
   async getClassifyDetails() {
     const { ctx } = this;
@@ -137,7 +155,6 @@ class ClassifyController extends Controller {
       };
     }
   }
-
   // 获取详情页的上一条和下一条列表
   async getClassifyDetailsFooter() {
     const { ctx } = this;
