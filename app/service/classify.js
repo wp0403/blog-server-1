@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-03-22 22:18:27
+ * @LastEditTime: 2023-03-22 23:45:37
  */
 'use strict';
 
@@ -123,7 +123,6 @@ class ClassifyService extends Service {
       },
     };
   }
-
   // 获取当前页的列表数据
   async _getClassifyList(obj) {
     let sql =
@@ -192,11 +191,15 @@ class ClassifyService extends Service {
     const sql =
       'select a.*,json_object("id",b.uid,"name",b.name) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.id = ? and type = ? and isDelete = ?';
     const list = await this.app.mysql.query(sql, [ id, 1, 0 ]);
+    await this._setClassifyDetailsViews(id, list[0].views || 0);
     return list && list[0]
       ? { ...list[0], userInfo: JSON.parse(list[0].userInfo) }
       : {};
   }
-
+  // 博文浏览量+1
+  async _setClassifyDetailsViews(id, num) {
+    await this.app.mysql.update('Bowen', { id, views: num += 1 });
+  }
   // 获取上一篇&下一篇的文章信息
   async _getClassifyDetailsFooter(id) {
     const bowenListNum = await this.app.mysql.query(
