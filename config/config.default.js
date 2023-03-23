@@ -4,7 +4,7 @@
  * @Author: 张三
  * @Date: 2021-07-09 15:47:47
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-03-23 15:34:00
+ * @LastEditTime: 2022-09-01 14:22:32
  */
 /* eslint valid-jsdoc: "off" */
 
@@ -35,10 +35,10 @@ module.exports = appInfo => {
   config.security = {
     csrf: {
       enable: false,
-      ignoreJSON: false,
+      ignoreJSON: true,
     },
     // 允许访问接口的白名单
-    domainWhiteList: [ 'localhost', 'https://wp-boke.work', 'https://www.wp-boke.work' ],
+    domainWhiteList: [ 'http://localhost:6006', 'https://wp-boke.work', 'https://www.wp-boke.work' ],
   };
   // 跨域配置
   config.cors = {

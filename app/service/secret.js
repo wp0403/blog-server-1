@@ -4,13 +4,27 @@
  * @Author: WangPeng
  * @Date: 2022-01-21 15:21:38
  * @LastEditors: WangPeng
- * @LastEditTime: 2022-07-12 18:31:45
+ * @LastEditTime: 2023-03-23 16:43:20
  */
 
 'use strict';
 
 const Service = require('egg').Service;
 
+const changeDate = d => {
+  const date = new Date(d);
+  const monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+
+  const month = monthNames[date.getMonth()];
+  let day = date.getDate();
+
+  if (day < 10) {
+    day = '0' + day;
+  }
+
+  return `${month} ${day}`;
+};
 class SecretService extends Service {
   async _getSecretList(obj) {
     const { id, page, page_size } = obj;
@@ -37,7 +51,7 @@ class SecretService extends Service {
       );
     }
 
-    const secretList = await this.app.mysql.select('secretList', {
+    let secretList = await this.app.mysql.select('secretList', {
       where,
       columns: [
         'id',
@@ -49,6 +63,12 @@ class SecretService extends Service {
       limit: +page_size,
       offset: (page - 1) * page_size,
     });
+
+    secretList = secretList.map(v => ({
+      ...v,
+      date_str: changeDate(v.time_str),
+      year: new Date(v.time_str).getFullYear(),
+    }));
 
     return {
       data: secretList,
