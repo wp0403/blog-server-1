@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:05:07
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-03-22 23:45:37
+ * @LastEditTime: 2023-03-24 17:42:04
  */
 'use strict';
 
@@ -12,8 +12,20 @@ const Service = require('egg').Service;
 
 const changeDate = d => {
   const date = new Date(d);
-  const monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
 
   const month = monthNames[date.getMonth()];
   let day = date.getDate();
@@ -73,7 +85,7 @@ class ClassifyService extends Service {
   }
   // 获取文归档
   async _getArchive() {
-    const sql = 'select id,title,time_str from Bowen';
+    const sql = 'select id,title,time_str from Bowen order by time_str desc';
 
     let bowenList = await this.app.mysql.query(sql);
     const newList = [];
@@ -102,17 +114,26 @@ class ClassifyService extends Service {
   }
   // 获取总页数
   async _getClassifyListPage(obj) {
-    let sql = 'select count(*) from Bowen where ';
+    let sql = 'select count(*) from Bowen where';
+    let content = [ 1, 0 ];
+
+    if (obj.keyword) {
+      sql += ` content like '%${obj.keyword}%' and`;
+    }
 
     if (!obj.id) {
-      sql += 'type in (?) and isDelete in (?)';
+      sql += ' type in (?) and isDelete in (?)';
     } else {
-      sql += 'classify_id=? and type in (?) and isDelete in (?)';
+      sql += ' classify_id=? and type in (?) and isDelete in (?)';
+      content = [ obj.id, 1, 0 ];
     }
-    const bowenListNum = await this.app.mysql.query(
-      sql,
-      obj.id ? [ obj.id, 1, 0 ] : [ 1, 0 ]
-    );
+
+    if (obj.sub_id) {
+      sql += ' classify_sub_id=?';
+      content = [ obj.id, 1, 0, obj.sub_id ];
+    }
+
+    const bowenListNum = await this.app.mysql.query(sql, content);
 
     return {
       data: Math.ceil(bowenListNum[0]['count(*)'] / obj.page_size),
@@ -123,7 +144,7 @@ class ClassifyService extends Service {
       },
     };
   }
-  // 获取当前页的列表数据
+  // 获取当前页的列表数据 可以传递一级类别id筛选
   async _getClassifyList(obj) {
     let sql =
       'select a.*,json_object("id",b.uid,"name",b.name) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?)';
@@ -139,7 +160,7 @@ class ClassifyService extends Service {
     if (obj.page && obj.page_size) {
       const current = obj.page; // 当前页码
       const pageSize = obj.page_size; // 一页展示多少条数据
-      sql += ' limit ?,?';
+      sql += ' order by selected desc,time_str desc limit ?,?';
       content.push((current - 1) * pageSize, parseInt(pageSize));
     }
 
@@ -153,7 +174,7 @@ class ClassifyService extends Service {
       },
     };
   }
-
+  // 获取当前页的列表数据 可以传递二级类别id筛选
   async _getClassifySubList(obj) {
     const bowenListNum = await this.app.mysql.query(
       'select count(*) from Bowen where classify_sub_id=? and type in (?) and isDelete in (?)',
@@ -185,7 +206,36 @@ class ClassifyService extends Service {
       },
     };
   }
+  // 获取当前页的列表数据 可以关键字筛选
+  async _getSearchClassifyList(obj) {
+    let sql =
+      'select a.*,json_object("id",b.uid,"name",b.name) as userInfo from Bowen a left join admin b on a.author_id = b.uid where a.type in (?)';
+    const content = [ 1, 0 ];
 
+    if (obj.keyword) {
+      sql += ` and a.isDelete in (?) and content like '%${obj.keyword}%'`;
+    } else {
+      sql += ' and a.isDelete in (?)';
+    }
+
+    // 开启分页
+    if (obj.page && obj.page_size) {
+      const current = obj.page; // 当前页码
+      const pageSize = obj.page_size; // 一页展示多少条数据
+      sql += ' order by selected desc,time_str desc limit ?,?';
+      content.push((current - 1) * pageSize, parseInt(pageSize));
+    }
+
+    const bowenList = await this.app.mysql.query(sql, content);
+
+    return {
+      data: bowenList.map(v => ({ ...v, userInfo: JSON.parse(v.userInfo) })),
+      meta: {
+        page: obj.page || 0,
+        page_size: obj.page_size || 0,
+      },
+    };
+  }
   // 获取详情
   async _getClassifyDetails(id) {
     const sql =
@@ -198,7 +248,7 @@ class ClassifyService extends Service {
   }
   // 博文浏览量+1
   async _setClassifyDetailsViews(id, num) {
-    await this.app.mysql.update('Bowen', { id, views: num += 1 });
+    await this.app.mysql.update('Bowen', { id, views: (num += 1) });
   }
   // 获取上一篇&下一篇的文章信息
   async _getClassifyDetailsFooter(id) {

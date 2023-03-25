@@ -4,7 +4,7 @@
  * @Author: 王鹏
  * @Date: 2021-08-13 10:02:54
  * @LastEditors: WangPeng
- * @LastEditTime: 2023-03-22 21:54:27
+ * @LastEditTime: 2023-03-24 17:42:53
  */
 'use strict';
 
@@ -55,10 +55,15 @@ class ClassifyController extends Controller {
   async getClassifyListPage() {
     const { ctx } = this;
 
-    const { id, page_size = 10 } = ctx.request.query;
+    const { id, page_size = 10, sub_id, keyword } = ctx.request.query;
 
     try {
-      const data = await ctx.service.classify._getClassifyListPage({ id, page_size });
+      const data = await ctx.service.classify._getClassifyListPage({
+        id,
+        page_size,
+        sub_id,
+        keyword,
+      });
 
       ctx.body = {
         code: 200,
@@ -80,7 +85,11 @@ class ClassifyController extends Controller {
     const { id, page, page_size = 10 } = ctx.request.query;
 
     try {
-      const data = await ctx.service.classify._getClassifyList({ id, page, page_size });
+      const data = await ctx.service.classify._getClassifyList({
+        id,
+        page,
+        page_size,
+      });
 
       ctx.body = {
         code: 200,
@@ -103,14 +112,44 @@ class ClassifyController extends Controller {
 
     if (!id) {
       // eslint-disable-next-line no-return-assign
-      return ctx.body = {
+      return (ctx.body = {
         code: 304,
         msg: '缺失二级分类id',
-      };
+      });
     }
 
     try {
-      const data = await ctx.service.classify._getClassifySubList({ id, page, page_size });
+      const data = await ctx.service.classify._getClassifySubList({
+        id,
+        page,
+        page_size,
+      });
+
+      ctx.body = {
+        code: 200,
+        msg: '分类列表数据获取成功',
+        ...data,
+      };
+    } catch (e) {
+      ctx.body = {
+        code: 305,
+        msg: '分类列表数据获取失败',
+        // data: e,
+      };
+    }
+  }
+  // 获取关键字搜索的博文列表
+  async getSearchClassifyList() {
+    const { ctx } = this;
+
+    const { page, page_size = 10, keyword } = ctx.request.query;
+
+    try {
+      const data = await ctx.service.classify._getSearchClassifyList({
+        page,
+        page_size,
+        keyword,
+      });
 
       ctx.body = {
         code: 200,
@@ -133,10 +172,10 @@ class ClassifyController extends Controller {
 
     if (!id) {
       // eslint-disable-next-line no-return-assign
-      return ctx.body = {
+      return (ctx.body = {
         code: 304,
         msg: '缺失详情id',
-      };
+      });
     }
 
     try {
@@ -163,14 +202,15 @@ class ClassifyController extends Controller {
 
     if (!id) {
       // eslint-disable-next-line no-return-assign
-      return ctx.body = {
+      return (ctx.body = {
         code: 304,
         msg: '缺失详情id',
-      };
+      });
     }
 
     try {
-      const classifyFooterList = await ctx.service.classify._getClassifyDetailsFooter(id);
+      const classifyFooterList =
+        await ctx.service.classify._getClassifyDetailsFooter(id);
 
       ctx.body = {
         code: 200,
